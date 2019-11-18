@@ -1,0 +1,91 @@
+*{
+    box-sizing: border-box;
+}
+.app-title{
+    padding:10px;
+}
+.todo-wrapper{
+    text-align: center;
+    box-sizing: border-box;
+}
+.todo-app{
+    background:#e15972;
+    display:inline-block;
+    max-width:800px;
+    min-height: 100vh;
+    margin:0 auto;
+    color: #fff;
+    width: 50%;
+}
+.input-wrapper{
+    position: relative;
+}
+.textbox{
+    height: 50px;
+    padding:5px;
+    width:100%;
+}
+.list{
+    list-style:none;
+    li{
+        text-align: left;
+        padding:10px;
+        border-bottom:1px dotted;
+        position: relative;
+        &:hover{
+           .list-actions{
+                display: flex;
+            }
+        }
+        a{
+            color: #fff;
+            display:inline-flex;
+            text-decoration: none;
+        }
+        .list-actions{
+            display: none;
+            position:absolute;
+            top:0;
+            right:0;
+            height: 100%;
+            width: auto;
+            transition:all 1s linear;
+        }
+        .del-icon,.edit-icon{
+            background: #fff;
+            width: 30px;
+            height: 100%;
+            color: #000;
+            font-weight: bold;
+            justify-content: center;
+            align-items: center;
+            font-size: 15px;
+            font-family: arial;
+            margin-right:2px;
+            i{
+                font-style: normal;
+            }
+        }
+    }
+}
+.btn{
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 5px 20px;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    font-size: 14px;
+    background: #149ace;
+    color: #fff;
+    box-shadow: none;
+    border: 0;
+    text-transform: uppercase;
+}
+.list-enter-active, .list-leave-active {
+    transition: all 1s;
+  }
+  .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    transform: translateY(30px);
+  }
