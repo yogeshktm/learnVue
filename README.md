@@ -1,10 +1,8 @@
 # learnVue
 Learn vue js with simple components
 
-<ol>
-<li>~~Quote of the day(from theysaidso api)~~</li>
-<li>~~Todo list app - without api completed~~</li>
-<li>INR Currency converter</li>
-<li>Quiz app</li>
-<li>Random recipe app</li>
-</ol>
+- [x] Todo list app - without api 
+- [x] INR Currency converter
+- [ ] Quiz app
+- [ ] Random recipe app
+
