@@ -1,11 +1,20 @@
 <template>
   <div>
   <div class="posts-list">
+    <transition name="fade">
+      <div class="edit-input" v-show="showEditInput">
+        <input type="text" class="edit-input" v-model="editInputValue"/><button @click="saveEditedItem(index)">Save</button>
+      </div>
+    </transition>
     <table>
-      <tr v-for="post in posts">
-        <td>{{post.title}}</td>
-        <td><a href="#" @click="filterPosts">{{post.userId}}</a></td>
-        <td><button>edit</button></td>
+      <tr v-for="post,index in posts" :id="index">
+        <td>
+          {{post.title}}
+        </td>
+        <td>{{post.userId}}</td>
+        <td><button @click="view(index)">View</button></td>
+        <td><button @click="editItem(index)">Edit</button></td>
+        <td><button @click="deleteItem(index)">delete</button></td>
       </tr>
     </table>
   </div>
@@ -20,7 +29,9 @@ export default {
   data() {
     return {
       posts:[],
-      userPosts:[]
+      editInputValue:"",
+      showEditInput:false,
+      currentIndex:''
     };
   },
   methods:{
@@ -39,11 +50,41 @@ export default {
             })
             .then(data => this.posts = data)
     },
-    filterPosts(){
-      this.userPosts = this.posts.filter(post => post.userId === 1);
-      console.log(this.userPosts);
-      let b = this.posts.filter(this.onlyUnique);
-      console.log('b',b);
+    view(index){
+      window.eventBus.$emit('listdatas', JSON.stringify(this.posts[index].body));
+    },
+    editItem(index){
+      console.log(index);
+      this.currentIndex = index;
+      this.showEditInput = true;
+      let currentPost = this.posts[index];
+      this.editInputValue = currentPost.title;
+    },
+    saveEditedItem(index){
+      console.log(this.currentIndex);
+      let currentPost = this.posts[this.currentIndex].id;
+      this.posts[this.currentIndex].title = this.editInputValue;
+      fetch('https://jsonplaceholder.typicode.com/posts/'+currentPost, {
+        method: 'PATCH',
+        body: JSON.stringify({
+          title: this.editInputValue
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          }
+        })
+      .then(response => response.json())
+      .then(json => console.log(json))
+      this.currentIndex = "";
+      this.editInputValue = "";
+      this.showEditInput = false;
+    },
+    deleteItem(index){
+      let currentItem = this.posts[index].id;
+      fetch('https://jsonplaceholder.typicode.com/posts/'+currentItem, {
+        method: 'DELETE'
+      })
+      this.posts.splice(index,1);
     }
   },
   created(){

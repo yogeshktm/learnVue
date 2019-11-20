@@ -1,10 +1,12 @@
 <template>
-  <div class="wrapper">
- <input type="number" refs="unitsDropdown"/>INR
+  <div class="currency-conveter">
+  <p class="fromCurrency">1</p>
  <select v-model="countrySelectValue">
    <option v-for="countries in countriesList">{{countries.id}}</option>
- </select>
- <p>{{conversionResults.results.countrySelectValue_'INR'}}</p>
+  </select>
+  <p class="fromCurrency">=</p>
+  <p class="results" v-for="result in conversionResults.results">{{result.val}}</p>
+  <p class="fromCurrency">INR</p>
  <button @click="getCurrencyRate">CONVERT</button>
 </div>
 </template>
@@ -17,7 +19,7 @@ export default {
   data() {
     return {
       countriesList:[],
-      countrySelectValue:"",
+      countrySelectValue:"USD",
       conversionResults:[]
     };
   },
